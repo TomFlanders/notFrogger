@@ -1,5 +1,5 @@
 let wins = 0;
-allEnemies = [];
+let allEnemies = [];
 
 // Enemies our player must avoid
 var Enemy = function() {
@@ -23,6 +23,16 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 500){
         this.x = -100;
     }
+    if( (this.x >= player.x - (85 + (20 * this.speed/50))) && (this.x <= player.x + 85) ){
+        if( (this.y >= player.y - 50) && (this.y <= player.y + 50) ){
+            setTimeout(function()
+            {
+                player.y = 410;
+                player.x = 200;
+//                makeEnemies();
+            }, 500);
+    }
+        }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -59,7 +69,6 @@ Player.prototype.update = function() {
 };
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-
 };
 Player.prototype.handleInput = function(keyCode) {
     switch(keyCode) {
@@ -67,6 +76,16 @@ Player.prototype.handleInput = function(keyCode) {
             if(player.y > 50){
                 player.y -= 85;
             }
+            if(player.y < 50) {
+                setTimeout(function()
+                {
+                    player.y = 410;
+                    player.x = 200;
+                    wins++;
+                    makeEnemies();
+                }, 500);
+            }
+        
             break;
         case "down":
             if(player.y < 400){
@@ -86,25 +105,32 @@ Player.prototype.handleInput = function(keyCode) {
         default:
 
     }
+
 };
 player = new Player();
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-howManyEnemies = (wins + 3);
 let eRows = [230,145,65];
 let speeds = [50,100,150];
 let cols = [100,200,300,400,500];
 let rRow = 0;
 let rSpeed = 0;
 let rCol = 0;
-for(let i = 0;i < howManyEnemies; i++){
-    allEnemies[i] = new Enemy();
-    rSpeed = Math.floor(Math.random() * 3);
-    allEnemies[i].speed = speeds[rSpeed];
-    rRow = Math.floor(Math.random() * 3);
-    allEnemies[i].y = eRows[rRow];
-    rCol = Math.floor(Math.random() * 5);
-    allEnemies[i].x = eRows[rCol];
+makeEnemies();
+
+function makeEnemies() {
+    allEnemies = [];
+    howManyEnemies = (wins + 3);
+    for(let i = 0;i < howManyEnemies; i++){
+        allEnemies[i] = new Enemy();
+        rSpeed = Math.floor(Math.random() * 3);
+        allEnemies[i].speed = speeds[rSpeed];
+        rRow = Math.floor(Math.random() * 3);
+        allEnemies[i].y = eRows[rRow];
+        rCol = Math.floor(Math.random() * 5);
+        allEnemies[i].x = cols[rCol];
+    }
+    
 }
