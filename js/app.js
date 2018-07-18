@@ -23,14 +23,10 @@ Enemy.prototype.update = function(dt) {
     if (this.x > 500){
         this.x = -100;
     }
-    if( (this.x >= player.x - (85 + (20 * this.speed/50))) && (this.x <= player.x + 85) ){
-        if( (this.y >= player.y - 50) && (this.y <= player.y + 50) ){
-            setTimeout(function()
-            {
+    if( (this.x >= player.x - 70) && (this.x <= player.x + 70) ){
+        if( (this.y >= player.y - 50) && (this.y <= player.y + 65) ){
                 player.y = 410;
                 player.x = 200;
-//                makeEnemies();
-            }, 500);
     }
         }
 };
