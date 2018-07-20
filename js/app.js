@@ -26,7 +26,7 @@ Player.prototype.handleInput = function(keyCode) {
             if(this.y > 50){
                 this.y -= 85;
             }
-            if(player.y < 50) {
+            if(this.y < 50) {
                 setTimeout(function()
                 {
                     wins++;
